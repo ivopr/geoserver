@@ -17,6 +17,8 @@ services:
       - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-forwarded-proto={{ index .Headers \"X-Forwarded-Proto\" 0 }}"
     environment:
       GEOSERVER_NODE_OPTS: id:GEOSERVER
+      PROXY_BASE_URL: https://geoserver.soldrake.net/geoserver/
+      PROXY_BASE_URL_HEADERS: true
       CORS_ALLOWED_ORIGINS: http://localhost:3100/
       ROOT_WEBAPP_REDIRECT: true
       SKIP_DEMO_DATA: true
