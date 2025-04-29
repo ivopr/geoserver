@@ -3,7 +3,7 @@ services:
     image: docker.osgeo.org/geoserver:2.27.0
     restart: always
     networks:
-      - tilesnet
+      - traefik
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.geoserver.rule=Host(`geoserver.soldrake.net`)"
@@ -44,6 +44,40 @@ services:
         limits:
           cpus: '4'
           memory: 6148M
+
+  proxy:
+    restart: always
+    image: traefik
+    command:
+      # - "--log.level=DEBUG"
+      - "--providers.docker=true"
+      - "--providers.docker.watch"
+      - "--providers.docker.network=traefik"
+      - "--providers.docker.exposedByDefault=false"
+
+      - "--certificatesresolvers.letsencrypt.acme.email=ivoprovensi1@gmail.com"  # replace with your email
+      - "--certificatesresolvers.letsencrypt.acme.storage=acme/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0"
+
+      - "--entryPoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entryPoints.web.http.redirections.entrypoint.permanent=true"
+    networks:
+      - traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik_acme:/acme
+      - traefik_logs:/logs
+    ports:
+      - "80:80"
+      - "443:443"
+
+networks:
+  traefik: 
 
 volumes:
   data:
