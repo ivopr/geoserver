@@ -23,7 +23,7 @@ services:
       CORS_ENABLED: true
       CORS_ALLOW_CREDENTIALS: true
       CORS_ALLOWED_ORIGINS: geoserver.soldrake.net,localhost:3100
-      GEOSERVER_CSRF_DISABLE: false
+      GEOSERVER_CSRF_DISABLE: true
       GEOSERVER_CSRF_WHITELIST: geoserver.soldrake.net,localhost
       WEBAPP_CONTEXT: ''
       ROOT_WEBAPP_REDIRECT: true
