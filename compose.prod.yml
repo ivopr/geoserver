@@ -10,6 +10,7 @@ services:
       - "traefik.http.routers.geoserver.service=geoserver"
       - "traefik.http.services.geoserver.loadbalancer.server.port=8080"
       - "traefik.http.routers.geoserver.tls=true"
+      - "traefik.http.routers.geoserver.tls.certresolver=letsencrypt"
       - "traefik.http.routers.geoserver.entryPoints=websecure"
       - "traefik.http.routers.geoserver.middlewares=forwarded-headers"
       - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-real-ip={{ index .Headers \"X-Forwarded-For\" 0 }}"
@@ -54,9 +55,6 @@ services:
 
       - "--certificatesresolvers.letsencrypt.acme.email=ivoprovensi1@gmail.com"  # replace with your email
       - "--certificatesresolvers.letsencrypt.acme.storage=acme/acme.json"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0"
 
       - "--entryPoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
