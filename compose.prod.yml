@@ -20,7 +20,9 @@ services:
       EXTRA_JAVA_OPTS: -Djava.net.preferIPv4Stack=true -DALLOW_ENV_PARAMETRIZATION=true -Xms1G -Xmx5G -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:+UseParallelGC
       PROXY_BASE_URL: https://geoserver.soldrake.net/
       PROXY_BASE_URL_HEADERS: true
-      CORS_ENABLED: false
+      CORS_ENABLED: true
+      CORS_ALLOW_CREDENTIALS: true
+      CORS_ALLOWED_ORIGINS: geoserver.soldrake.net,localhost:3100
       GEOSERVER_CSRF_DISABLE: false
       GEOSERVER_CSRF_WHITELIST: geoserver.soldrake.net,localhost
       WEBAPP_CONTEXT: ''
