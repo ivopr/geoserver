@@ -21,6 +21,7 @@ services:
       PROXY_BASE_URL: https://geoserver.soldrake.net/geoserver/
       PROXY_BASE_URL_HEADERS: true
       CORS_ALLOWED_ORIGINS: http://localhost:3100/
+      ROOT_WEBAPP_REDIRECT: true
       SKIP_DEMO_DATA: true
       # POSTGRES_JNDI_ENABLED: true
       # POSTGRES_HOST: xxx.xxx.xxx.xxx
