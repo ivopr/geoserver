@@ -1,0 +1,52 @@
+services:
+  app:
+    image: docker.osgeo.org/geoserver:2.27.0
+    restart: always
+    networks:
+      - tilesnet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.geoserver.rule=Host(`geoserver.soldrake.net`)"
+      - "traefik.http.routers.geoserver.service=geoserver"
+      - "traefik.http.services.geoserver.loadbalancer.server.port=8080"
+      - "traefik.http.routers.geoserver.tls=true"
+      - "traefik.http.routers.geoserver.entryPoints=websecure"
+      - "traefik.http.routers.geoserver.middlewares=forwarded-headers"
+      - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-real-ip={{ index .Headers \"X-Forwarded-For\" 0 }}"
+      - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-forwarded-proto={{ index .Headers \"X-Forwarded-Proto\" 0 }}"
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Origin=geoportal.soldrake.net"
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Methods=GET,POST,OPTIONS"
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Headers=*"
+    environment:
+      GEOSERVER_NODE_OPTS: id:GEOSERVER
+      EXTRA_JAVA_OPTS: -Djava.net.preferIPv4Stack=true -DALLOW_ENV_PARAMETRIZATION=true -Xms1G -Xmx5G -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:+UseParallelGC
+      PROXY_BASE_URL: https://geoserver.soldrake.net/
+      PROXY_BASE_URL_HEADERS: true
+      CORS_ENABLED: true
+      GEOSERVER_CSRF_DISABLE: false
+      GEOSERVER_CSRF_WHITELIST: geoserver.soldrake.net,localhost
+      WEBAPP_CONTEXT: ''
+      ROOT_WEBAPP_REDIRECT: true
+      SKIP_DEMO_DATA: true
+      # POSTGRES_JNDI_ENABLED: true
+      # POSTGRES_HOST: xxx.xxx.xxx.xxx
+      # POSTGRES_PORT: 5432
+      # POSTGRES_DB: database
+      # POSTGRES_USERNAME: database_user
+      # POSTGRES_PASSWORD: database_pass
+      # POSTGRES_JNDI_RESOURCE_NAME: jdbc/db
+    volumes:
+      - ./additional_libs:/opt/additional_libs:Z
+      - data:/opt/geoserver_data:Z
+      - mosaicos:/mosaicos
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 6148M
+
+volumes:
+  data:
+    driver: nfsvol
+  mosaicos:
+    driver: nfsvol

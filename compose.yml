@@ -1,0 +1,26 @@
+services:
+  app:
+    image: docker.osgeo.org/geoserver:2.27.0
+    restart: always
+    ports:
+      - 80:8080
+    environment:
+      GEOSERVER_NODE_OPTS: id:GEOSERVER
+      EXTRA_JAVA_OPTS: -Xms4G -Xmx12G -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:+UseParallelGC -Djava.net.preferIPv4Stack=true
+      WEBAPP_CONTEXT: ''
+      ROOT_WEBAPP_REDIRECT: true
+      SKIP_DEMO_DATA: true
+      # POSTGRES_JNDI_ENABLED: true
+      # POSTGRES_HOST: xxx.xxx.xxx.xxx
+      # POSTGRES_PORT: 5432
+      # POSTGRES_DB: database
+      # POSTGRES_USERNAME: database_user
+      # POSTGRES_PASSWORD: database_pass
+      # POSTGRES_JNDI_RESOURCE_NAME: jdbc/db
+    volumes:
+      - ./additional_libs:/opt/additional_libs:Z
+      - data_dev:/opt/geoserver_data:Z
+
+volumes:
+  data_dev:
+    driver: nfsvol
