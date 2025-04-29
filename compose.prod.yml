@@ -14,9 +14,6 @@ services:
       - "traefik.http.routers.geoserver.middlewares=forwarded-headers"
       - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-real-ip={{ index .Headers \"X-Forwarded-For\" 0 }}"
       - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-forwarded-proto={{ index .Headers \"X-Forwarded-Proto\" 0 }}"
-      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Origin=geoportal.soldrake.net"
-      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Methods=GET,POST,OPTIONS"
-      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Headers=*"
     environment:
       GEOSERVER_NODE_OPTS: id:GEOSERVER
       EXTRA_JAVA_OPTS: -Djava.net.preferIPv4Stack=true -DALLOW_ENV_PARAMETRIZATION=true -Xms1G -Xmx5G -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:+UseParallelGC
