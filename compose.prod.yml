@@ -55,6 +55,7 @@ services:
 
       - "--certificatesresolvers.letsencrypt.acme.email=ivoprovensi1@gmail.com"  # replace with your email
       - "--certificatesresolvers.letsencrypt.acme.storage=acme/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
 
       - "--entryPoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
