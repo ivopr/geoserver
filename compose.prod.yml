@@ -18,7 +18,7 @@ services:
     environment:
       GEOSERVER_NODE_OPTS: id:GEOSERVER
       EXTRA_JAVA_OPTS: -Djava.net.preferIPv4Stack=true -DALLOW_ENV_PARAMETRIZATION=true -Xms1G -Xmx5G -XX:SoftRefLRUPolicyMSPerMB=36000 -XX:+UseParallelGC
-      PROXY_BASE_URL: https://geoserver.soldrake.net/
+      PROXY_BASE_URL: https://geoserver.soldrake.net/geoserver/
       PROXY_BASE_URL_HEADERS: true
       CORS_ALLOWED_ORIGINS: http://localhost:3100/
       SKIP_DEMO_DATA: true
