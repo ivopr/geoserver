@@ -84,3 +84,7 @@ volumes:
     driver: nfsvol
   mosaicos:
     driver: nfsvol
+  traefik_acme:
+    driver: nfsvol
+  traefik_logs:
+    driver: nfsvol
