@@ -46,6 +46,7 @@ services:
   proxy:
     restart: always
     image: traefik
+    env_file: .env
     command:
       # - "--log.level=DEBUG"
       - "--providers.docker=true"
@@ -55,8 +56,8 @@ services:
 
       - "--certificatesresolvers.letsencrypt.acme.email=ivoprovensi1@gmail.com"  # replace with your email
       - "--certificatesresolvers.letsencrypt.acme.storage=acme/acme.json"
-      - "--certificatesresolvers.letsencrypt.acme.httpChallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
 
       - "--entryPoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
