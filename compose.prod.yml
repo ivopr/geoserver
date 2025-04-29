@@ -9,8 +9,8 @@ services:
       - "traefik.http.routers.geoserver.rule=Host(`geoserver.soldrake.net`)"
       - "traefik.http.routers.geoserver.service=geoserver"
       - "traefik.http.services.geoserver.loadbalancer.server.port=8080"
-      - "traefik.http.routers.geoserver.tls=true"
-      - "traefik.http.routers.geoserver.entryPoints=websecure"
+      # - "traefik.http.routers.geoserver.tls=true"
+      # - "traefik.http.routers.geoserver.entryPoints=websecure"
       - "traefik.http.routers.geoserver.middlewares=forwarded-headers"
       - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-real-ip={{ index .Headers \"X-Forwarded-For\" 0 }}"
       - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-forwarded-proto={{ index .Headers \"X-Forwarded-Proto\" 0 }}"
@@ -52,17 +52,17 @@ services:
       - "--providers.docker.network=traefik"
       - "--providers.docker.exposedByDefault=false"
 
-      - "--certificatesresolvers.letsencrypt.acme.email=ivoprovensi1@gmail.com"  # replace with your email
-      - "--certificatesresolvers.letsencrypt.acme.storage=acme/acme.json"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0"
+      # - "--certificatesresolvers.letsencrypt.acme.email=ivoprovensi1@gmail.com"  # replace with your email
+      # - "--certificatesresolvers.letsencrypt.acme.storage=acme/acme.json"
+      # - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      # - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0"
 
       - "--entryPoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
-      - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
-      - "--entryPoints.web.http.redirections.entrypoint.permanent=true"
+      # - "--entrypoints.websecure.address=:443"
+      # - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+      # - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
+      # - "--entryPoints.web.http.redirections.entrypoint.permanent=true"
     networks:
       - traefik
     volumes:
