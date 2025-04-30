@@ -14,6 +14,7 @@ services:
       - "traefik.http.routers.geoserver.entryPoints=websecure"
       - "traefik.http.routers.geoserver.middlewares=forwarded-headers"
       - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-real-ip={{ index .Headers \"X-Forwarded-For\" 0 }}"
+      - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.authorization={{ index .Headers \"Authorization\" 0 }}"
       - "traefik.http.middlewares.forwarded-headers.headers.customrequestheaders.x-forwarded-proto={{ index .Headers \"X-Forwarded-Proto\" 0 }}"
     environment:
       GEOSERVER_NODE_OPTS: id:GEOSERVER
